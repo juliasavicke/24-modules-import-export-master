@@ -1,1 +1,17 @@
-@import 'reset.css';
+@import "reset.css";
+.userDiv {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: auto;
+  width: 300px;
+  padding: 0;
+}
+.top {
+  grid-column: 1 / span 2;
+}
+.top img {
+  width: 100%;
+  padding: 0;
+  background-size: cover;
+}

@@ -6,6 +6,7 @@ console.log("main.js");
 const htmlEl = {
   pr1Div: document.getElementById("praktine1"),
   pr2Div: document.getElementById("praktine2"),
+  pr3Div: document.getElementById("praktine3"),
 };
 
 function initPr1() {
@@ -18,7 +19,6 @@ function initPr1() {
   const userInStorage = localStorage.getItem("user");
 
   if (userInStorage !== null) {
-    console.log("userInStorage ===", userInStorage);
     const userDivEl = document.createElement("div");
     userDivEl.className = "card";
     userDivEl.innerHTML = `
@@ -34,6 +34,8 @@ function initPr1() {
 }
 initPr1();
 
+// praktine-2
+
 function initPr2(age) {
   let totalDaysLived = 365 * age;
   const totalDaysLivedEl = document.createElement("h2");
@@ -43,3 +45,59 @@ function initPr2(age) {
   return totalDaysLived;
 }
 initPr2(36);
+
+// praktine-3
+
+function getFetched(from) {
+  return fetch(from)
+    .then((resp) => resp.json())
+    .catch((err) => console.warn("klaida getFetched", err));
+}
+
+function getData() {
+  const url = "https://randomuser.me/api/";
+  return getFetched(url).then((data) => data.results);
+}
+function renderList(data) {
+  const userDivEl = document.createElement("div");
+  userDivEl.className = "card userDiv";
+  //   userDivEl.innerHTML = `
+  //     <h2>${data.name.title} ${data.name.first} ${data.name.last}</h2>
+  //     <p>Age: ${data.dob.age}</p>
+  //     <p>Email: ${data.email}</p>
+  //     <img src=${data.picture.large}></img>
+  //     `;
+  htmlEl.pr3Div.append(userDivEl);
+  //  top div for image
+  const topDivEl = document.createElement("div");
+  topDivEl.className = "top";
+  const imgEl = document.createElement("img");
+  imgEl.src = data.picture.large;
+  topDivEl.append(imgEl);
+  //  bottom div for text
+  const bottomDivEl = document.createElement("div");
+  bottomDivEl.className = "bottom";
+
+  // append top and botttom
+  userDivEl.append(topDivEl, bottomDivEl);
+  //   name h2 element
+  const h2NameEl = document.createElement("h2");
+  h2NameEl.textContent = `${data.name.title} ${data.name.first} ${data.name.last}`;
+  const h3AgeEl = document.createElement("h3");
+  h3AgeEl.textContent = `${data.dob.age} years old`;
+  const pEmailEl = document.createElement("p");
+  pEmailEl.textContent = `Email: ${data.email}`;
+
+  bottomDivEl.append(h2NameEl, h3AgeEl, pEmailEl);
+}
+
+function initPr3() {
+  let userData = "";
+  getData().then((data) => {
+    userData = data[0];
+    console.log("userData ===", userData);
+    renderList(userData);
+  });
+}
+
+initPr3();
