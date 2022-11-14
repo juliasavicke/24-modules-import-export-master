@@ -5,6 +5,7 @@ console.log("main.js");
 
 const htmlEl = {
   pr1Div: document.getElementById("praktine1"),
+  pr2Div: document.getElementById("praktine2"),
 };
 
 function initPr1() {
@@ -32,3 +33,13 @@ function initPr1() {
   }
 }
 initPr1();
+
+function initPr2(age) {
+  let totalDaysLived = 365 * age;
+  const totalDaysLivedEl = document.createElement("h2");
+  totalDaysLivedEl.textContent = `${totalDaysLived} days lived.`;
+  htmlEl.pr2Div.append(totalDaysLivedEl);
+
+  return totalDaysLived;
+}
+initPr2(36);
